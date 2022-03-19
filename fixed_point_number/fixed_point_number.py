@@ -39,11 +39,9 @@ class FixedPointNumber:
 
     def div(self, x):
         self._check(x)
-        (div_div, div_surp) = divmod(self.internal, x.internal)
+        (div_div, div_surp) = divmod(self.internal * self.scale, x.internal)
         logger.debug(f"div_div: {div_div}, div_surp: {div_surp}")
-        (surp_div, surp_surp) = divmod(div_surp * self.scale, x.internal)
-        logger.debug(f"surp_div: {surp_div}, surp_surp: {surp_surp}")
-        if not 0 == surp_surp:
-            logger.warning(f"drop surplus: {surp_surp / (self.scale ** 2)}")
-        self.internal = div_div * self.scale + surp_div
+        if not 0 == div_surp:
+            logger.warning(f"drop surplus: {div_surp / (self.scale ** 2)}")
+        self.internal = div_div
         return self
