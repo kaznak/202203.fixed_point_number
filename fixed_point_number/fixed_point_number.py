@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class FixedPointNumber:
     def __init__(self, internal_value: int, scaling_factor: int):
         if scaling_factor < 1:
@@ -21,4 +26,13 @@ class FixedPointNumber:
     def sub(self, x):
         self._check(x)
         self.internal -= x.internal
+        return self
+
+    def mul(self, x):
+        self._check(x)
+        internal_mul = self.internal * x.internal
+        (internal, surplus) = divmod(internal_mul, self.scale)
+        if not 0 == surplus:
+            logger.warning(f"drop surplus: {surplus / (self.scale ** 2)}")
+        self.internal = internal
         return self
