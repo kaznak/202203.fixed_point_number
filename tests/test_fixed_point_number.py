@@ -6,4 +6,6 @@ def test_version():
 
 
 def test_FixedPointNumber():
-    assert FixedPointNumber()
+    x = FixedPointNumber(100,100)
+    assert x.num == 100
+    assert x.q == 100
