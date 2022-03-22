@@ -5,12 +5,16 @@
 
 - 以下の理由から有理数に寄せて実装。
   - python の integer は無限精度[^1]
+    - integer を使うとその部分の演算の精度を気にしなくてよい
+    - 独自実装だと諸々自分で決める必要があり大変
   - 2 や 10 の冪乗数だけではなく色々なスケーリング係数が使われるケースがあるらしい[^2]
+    - 汎用性の観点から色々な分母に対応できたほうがよい
 
 [^1]: [Integers have unlimited precision.](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex)
 [^2]: [Fixed-point formats with scaling factors of the form 2n-1 (namely 1, 3, 7, 15, 31, etc.) have been said to be appropriate for image processing and other digital signal procssing tasks.](https://en.wikipedia.org/wiki/Fixed-point_arithmetic#Choice_of_scaling_factors)
 
-- 除算は整除法で実装
+- とはいえ有理数ライブラリ使うのは何か違う気がするので独自実装
+- 除算は整除法
 - 乗算、除算に伴う桁溢れは、剰余を切り捨て
 
 ## 実装
